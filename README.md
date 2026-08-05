@@ -98,34 +98,3 @@ Evaluated using 5-fold cross-validation (`random_state=42`):
 * **Univariate vs. Multivariate**: Moving from a single feature (`RM`) to all 13 features reduces MSE by ~45.8% (from 40.38 to 21.90) and increases $R^2$ from 50.9% to 73.3%, showing that single-variable models miss crucial economic and demographic factors.
 * **Impact of Interaction Terms**: Adding `CRIM * PTRATIO` slightly increased MSE (21.8956 vs 21.9623). Unguided feature multiplication can introduce redundant variance without adding explanatory signal.
 * **Ridge Regularization**: RidgeCV achieved the best overall performance across all metrics (MSE: 21.8334, $R^2$: 0.7340). Shrinking regression coefficients stabilizes estimation in the presence of collinear variables (such as `TAX` and `RAD`).
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone Repository & Set Up Virtual Environment:
-
-```bash
-git clone https://github.com/cibrgine/boston-housing-price-prediction.git
-cd boston-housing-price-prediction
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-```
-
-### 2. Install Dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run Preprocessing Pipeline:
-
-```bash
-python data_prep.py
-```
-
-### 4. Execute Benchmark Evaluation:
-
-```bash
-python MSE_Compare.py
-```
