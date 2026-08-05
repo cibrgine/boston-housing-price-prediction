@@ -50,8 +50,6 @@ Every model function accepts a DataFrame and cross-validation fold count, standa
 * **Target ($y$)**: `df['MEDV']`
 * **Architecture**: `KFold(n_splits=5, shuffle=True, random_state=42)` paired with `Pipeline([('scaler', StandardScaler()), ('model', LinearRegression())])`.
 
-![Univariate Model Code](images/model_uni.png)
-
 ---
 
 ### 2️⃣ Model 2: Multivariate Linear Regression (`model_multi.py`)
@@ -60,16 +58,12 @@ Every model function accepts a DataFrame and cross-validation fold count, standa
 * **Target ($y$)**: `df['MEDV']`
 * **Architecture**: Evaluates overall linear relationship across all primary metrics.
 
-![Multivariate Model Code](images/model_multi.png)
-
 ---
 
 ### 3️⃣ Model 3: Feature Interaction (`model_Mix_columns.py`)
 * **Strategy**: Evaluates manual feature engineering by constructing a multiplicative interaction term combining crime rate (`CRIM`) and pupil-teacher ratio (`PTRATIO`).
 * **Predictors ($X$)**: All 13 base features + `X['CRIM_PTRATIO'] = X['CRIM'] * X['PTRATIO']` (14 total features).
 * **Target ($y$)**: `df['MEDV']`
-
-![Mixed Columns Model Code](images/model_mix.png)
 
 ---
 
@@ -79,14 +73,10 @@ Every model function accepts a DataFrame and cross-validation fold count, standa
 * **Target ($y$)**: `df['MEDV']`
 * **Search Space**: Evaluates 100 log-spaced candidate regularization parameters ($\alpha \in [10^{-3}, 10^3]$) via `RidgeCV`.
 
-![RidgeCV Model Code](images/model_ridge.png)
-
 ---
 
 ### 5️⃣ Master Comparison Script (`MSE_Compare.py`)
 Executes all four model workflows sequentially, computes 5-fold cross-validation metrics, formats results into an aggregated comparison table, and generates visualization plots.
-
-![MSE Compare Script Code](images/mse_compare_code.png)
 
 ---
 
@@ -101,8 +91,6 @@ Evaluated using 5-fold cross-validation (`random_state=42`):
 | **Interaction (`CRIM * PTRATIO`)** | 21.9623 | 4.6864 | 3.2675 | 0.7325 |
 | **RidgeCV** | **21.8334** | **4.6726** | **3.2346** | **0.7340** |
 
-![Benchmark Output](images/benchmark_results.png)
-
 ---
 
 ## 📈 Key Insights & Performance Analysis
@@ -110,34 +98,3 @@ Evaluated using 5-fold cross-validation (`random_state=42`):
 * **Univariate vs. Multivariate**: Moving from a single feature (`RM`) to all 13 features reduces MSE by ~45.8% (from 40.38 to 21.90) and increases $R^2$ from 50.9% to 73.3%, showing that single-variable models miss crucial economic and demographic factors.
 * **Impact of Interaction Terms**: Adding `CRIM * PTRATIO` slightly increased MSE (21.8956 vs 21.9623). Unguided feature multiplication can introduce redundant variance without adding explanatory signal.
 * **Ridge Regularization**: RidgeCV achieved the best overall performance across all metrics (MSE: 21.8334, $R^2$: 0.7340). Shrinking regression coefficients stabilizes estimation in the presence of collinear variables (such as `TAX` and `RAD`).
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone Repository & Set Up Virtual Environment:
-
-```bash
-git clone https://github.com/cibrgine/boston-housing-price-prediction.git
-cd boston-housing-price-prediction
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-```
-
-### 2. Install Dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run Preprocessing Pipeline:
-
-```bash
-python data_prep.py
-```
-
-### 4. Execute Benchmark Evaluation:
-
-```bash
-python MSE_Compare.py
-```
